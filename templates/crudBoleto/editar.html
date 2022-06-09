@@ -1,0 +1,53 @@
+{% extends 'plantilla.html' %}
+{% block titulo %} Editar Boleto {% endblock %}
+{% block content %}
+    <div class="row aling-items-center justify-content-center ">
+        <div class="col-9 col-md-7 py-5 px-5 border rounded m-4 shadow">
+            <h4 class="alert-heading mb-2">FORMULARIO EDITAR</h4>
+            <form action="/actualizarPersona" method="POST" class="mt-2">
+                <div class="form-group mb-2">
+                    <label id="identificacion">Identificacion: </label>
+                    <input type="number" id="identificacion" name="identificacion" class="form-control" value="{{personas[0]}}" />
+                    <errors path="identificacion" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="nombre">Nombre: </label>
+                    <input id="nombre" name="nombre" class="form-control" value="{{personas[1]}}" />
+                    <errors id="nombre" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="apellido">Apellido: </label>
+                    <input id="apellido" name="apellido" class="form-control" value="{{personas[2]}}" />
+                    <errors id="apellido" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="email">Email: </label>
+                    <input id="email" name="email" class="form-control" value="{{personas[3]}}" />
+                    <errors id="email" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="telefono">Telefono: </label>
+                    <input id="telefono" name="telefono" class="form-control" value="{{personas[4]}}" />
+                    <errors id="telefono" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-select" name="select_per" aria-label="Default select example">
+                        <option selected >{{personas[5]}}</option>
+                        <option value="1">Pasajero</option>
+                        <option value="2">Conductor</option>
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-select" name="select_doc" aria-label="Default select example">
+                        <option selected value="">{{personas[6]}}</option>
+                        <option value="1">Cedula de ciudadania</option>
+                        <option value="2">Tarjeta de identidad</option>
+                        <option value="3">Pasaporte</option>
+                    </select>
+                </div>
+                <a class="btn btn-secondary" href="/listaPersona" role="button">Regresar</a>
+                <button name="Enviar" type="submit" class="btn btn-success">Guadar Cambios</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'plantilla.html' %}
+{% block titulo %} Editar Personas {% endblock %}
+{% block content %}
+    <div class="row aling-items-center justify-content-center ">
+        <div class="col-9 col-md-7 py-5 px-5 border rounded m-4 shadow">
+            <h4 class="alert-heading mb-2">FORMULARIO EDITAR</h4>
+            <form action="/editarPersona/{{personas[0]}}" method="POST" class="mt-2">
+                <div class="form-group mb-2">
+                    <label id="nombre">Nombre: </label>
+                    <input id="nombre" name="nombre" class="form-control" value="{{personas[1]}}" />
+                    <errors id="nombre" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="apellido">Apellido: </label>
+                    <input id="apellido" name="apellido" class="form-control" value="{{personas[2]}}" />
+                    <errors id="apellido" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="email">Email: </label>
+                    <input id="email" name="email" class="form-control" value="{{personas[3]}}" />
+                    <errors id="email" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="telefono">Telefono: </label>
+                    <input id="telefono" name="telefono" class="form-control" value="{{personas[4]}}" />
+                    <errors id="telefono" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-select" id="select_per" name="select_per" aria-label="Default select example">
+                        {% for tipo_persona in tipo_persona %}
+                        <option value="{{tipo_persona[0]}}">{{tipo_persona[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-select" id="select_doc" name="select_doc" aria-label="Default select example">
+                        {% for tipo_documento in tipo_documento %}
+                        <option value="{{tipo_documento[0]}}">{{tipo_documento[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <a class="btn btn-secondary" href="/listaPersona" role="button">Regresar</a>
+                <button name="Enviar" type="submit" class="btn btn-success">Guadar Cambios</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function tipo_documento(){
+            document.getElementById('select_doc').value = '{{personas[6]}}';
+        }
+        setTimeout(tipo_documento(), 4000)
+        function tipo_persona(){
+            document.getElementById('select_per').value = '{{personas[5]}}';
+        }
+        setTimeout(tipo_persona(), 4000)
+    </script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'plantilla.html' %}
+{% block titulo %} Boletos {% endblock %}
+{% block content %}
+    
+    <div class=" py-5 px-5 border rounded m-4 shadow">
+        <div class="m-2 atras">
+            <a class="btn btn-dark" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg></a>
+                <a class="btn" href="/agregarBoleto" style="background: #00bfa6; color: #fff;">Agregar</a>
+        </div>
+        
+        <h1 class="text-center">Tabla Boleto</h1>
+        <br>
+        <table class="table table-hover" id="tablass">
+            <thead class="thead-dark text-center">
+                <th>ID BOLETO</th>
+                <th>PASAJERO</th>
+                <th>CONDUCTOR</th>
+                <th>FECHA EXPEDICION</th>
+                <th>FECHA VIAJE</th>
+                <th>SILLA</th>
+                <th>PLACA</th>
+                <th>TARIFA</th>
+                <th>ORIGEN</th>
+                <th>DESTINO</th>
+                <th colspan="2">ACCIONES</th>
+            </thead>
+            <tbody class="text-center">
+                {% for boleto in boletos %}
+                <tr>
+                    <td>{{boleto[0]}}</td>
+                    <td>{{boleto[1]}}</td>
+                    <td>{{boleto[2]}}</td>
+                    <td>{{boleto[3]}}</td>
+                    <td>{{boleto[4]}}</td>
+                    <td>{{boleto[5]}}</td>
+                    <td>{{boleto[6]}}</td>
+                    <td>{{boleto[7]}}</td>
+                    <td>{{boleto[8]}}</td>
+                    <td>{{boleto[9]}}</td>
+                    <td>
+                        <a href="editarBoleto/{{boleto[0]}}" class="btn btn-outline-warning"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                            </svg></a>
+
+                            <a href="eliminarBoleto/{{boleto[0]}}" id="eliminar" onclick="return confirm('Estás seguro que deseas eliminar este registro?');" class="btn btn-outline-danger"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd"
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg></a>
+                        <br>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Swal.fire({
+        //     title: 'Estas seguro de eliminar?',
+        //     text: "You won't be able to revert this!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Si, eliminarlo!'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         Swal.fire(
+        //             'Deleted!',
+        //             'Your file has been deleted.',
+        //             'success'
+        //         ) 
+        //     }
+        // })
+    </script>
+{% endblock %}

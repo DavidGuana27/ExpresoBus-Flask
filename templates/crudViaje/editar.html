@@ -1,0 +1,65 @@
+{% extends 'plantilla.html' %}
+{% block titulo %} Editar Viaje {% endblock %}
+{% block content %}
+    <div class="row aling-items-center justify-content-center ">
+        <div class="col-9 col-md-7 py-5 px-5 border rounded m-4 shadow">
+            <h4 class="alert-heading mb-2">FORMULARIO EDITAR</h4>
+            <form action="/editarViaje/{{viajes[0]}}" method="POST" class="mt-2">
+                <div class="form-group mb-2">
+                    <label id="numero">Numero de boleto: </label>
+                    <input type="number" id="numero" name="numero" class="form-control" value="{{viajes[0]}}"/>
+                    <errors path="numero" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="fecha">Fecha: </label>
+                    <input type="text" id="fecha" name="fecha" class="form-control" value="{{viajes[1]}}" />
+                    <errors id="fecha" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="silla">Silla: </label>
+                    <input type="number" id="silla" name="silla" class="form-control" value="{{viajes[2]}}" />
+                    <errors id="silla" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="placa">Placa: </label>
+                    <input type="text" id="placa" name="placa" class="form-control" value="{{viajes[3]}}" />
+                    <errors id="placa" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="tarifa">Tarifa: </label>
+                    <input type="number" id="tarifa" name="tarifa" class="form-control" value="{{viajes[4]}}" />
+                    <errors id="tarifa" elemnt="div" class="text-danger" />
+                </div>
+                <div class="form-group mb-2">
+                    <label id="">Origen: </label>
+                    <select class="form-select" id="select_ciudad_origen" name="select_ciudad_origen" aria-label="Default select example">
+                        {% for ciudad in ciudad %}
+                        <option value="{{ciudad[0]}}">{{ciudad[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <label id="">Destino: </label>
+                    <select class="form-select" id="select_ciudad_destino" name="select_ciudad_destino" aria-label="Default select example">
+                        {% for ciudad in ciudad %}
+                        <option value="{{ciudad[0]}}">{{ciudad[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <a class="btn btn-secondary" href="/listaViaje" role="button">Regresar</a>
+                <button type="submit" name="Enviar" class="btn btn-success">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function ciudadOrigen(){
+            document.getElementById('select_ciudad_origen').value = '{{viajes[5]}}';
+        }
+        setTimeout(ciudadOrigen(), 4000)
+
+        function ciudadDestino(){
+            document.getElementById('select_ciudad_destino').value = '{{viajes[6]}}';
+        }
+        setTimeout(ciudadDestino(), 4000)
+    </script>
+{% endblock %}
