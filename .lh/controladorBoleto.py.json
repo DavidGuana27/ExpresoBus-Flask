@@ -1,0 +1,102 @@
+{
+    "sourceFile": "controladorBoleto.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 21,
+            "patches": [
+                {
+                    "date": 1655123583154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1655123600857,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,11 @@\n         cursor.execute('INSERT INTO `boleto` (`id`, `ident_pasajero`, `ident_conductor`, `num_viaje`) VALUES(%s, %s, %s, %s)',\r\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n-#?--------------- CONSULTAR VIAJE POR NUMERO\r\n+#?--------------- CONSULTAR PASAJERO POR NUMERO\r\n def consultarViajeNum(numero):\r\n+\r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n     conexion = mysqlConnect()\r\n     boleto = None\r\n"
+                },
+                {
+                    "date": 1655123607594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n         cursor.execute('INSERT INTO `boleto` (`id`, `ident_pasajero`, `ident_conductor`, `num_viaje`) VALUES(%s, %s, %s, %s)',\r\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n-#?--------------- CONSULTAR PASAJERO POR NUMERO\r\n+#?--------------- CONSULTAR PASAJERO POR IDENTIFICACION\r\n def consultarViajeNum(numero):\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n"
+                },
+                {
+                    "date": 1655123645108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,17 @@\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n #?--------------- CONSULTAR PASAJERO POR IDENTIFICACION\r\n-def consultarViajeNum(numero):\r\n+def consultarPersonaTipoDoc():\r\n+    conexion = mysqlConnect()\r\n+    personas = []\r\n+    with conexion.cursor() as cursor:\r\n+        sql = \"SELECT * FROM tipo_documento\"\r\n+        cursor.execute(sql)\r\n+        personas = cursor.fetchall()\r\n+        conexion.close()\r\n+    return personas\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n     conexion = mysqlConnect()\r\n"
+                },
+                {
+                    "date": 1655123660457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,13 +19,13 @@\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n #?--------------- CONSULTAR PASAJERO POR IDENTIFICACION\r\n-def consultarPersonaTipoDoc():\r\n+def consultarPersonaTipoPer():\r\n     conexion = mysqlConnect()\r\n     personas = []\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM tipo_documento\"\r\n+        sql = \"SELECT * FROM tipo_persona\"\r\n         cursor.execute(sql)\r\n         personas = cursor.fetchall()\r\n         conexion.close()\r\n     return personas\r\n"
+                },
+                {
+                    "date": 1655123682377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,18 +18,18 @@\n         cursor.execute('INSERT INTO `boleto` (`id`, `ident_pasajero`, `ident_conductor`, `num_viaje`) VALUES(%s, %s, %s, %s)',\r\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n-#?--------------- CONSULTAR PASAJERO POR IDENTIFICACION\r\n-def consultarPersonaTipoPer():\r\n+#?--------------- CONSULTAR PERSONA POR IDENTIFICACION\r\n+def consultarPersonaId(identificacion):\r\n     conexion = mysqlConnect()\r\n-    personas = []\r\n+    persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM tipo_persona\"\r\n-        cursor.execute(sql)\r\n-        personas = cursor.fetchall()\r\n+        sql = \"SELECT * FROM persona WHERE identificacion = %s\"\r\n+        cursor.execute(sql, (identificacion))\r\n+        persona = cursor.fetchone()\r\n         conexion.close()\r\n-    return personas\r\n+    return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n     conexion = mysqlConnect()\r\n"
+                },
+                {
+                    "date": 1655124737912,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,11 @@\n         cursor.execute('INSERT INTO `boleto` (`id`, `ident_pasajero`, `ident_conductor`, `num_viaje`) VALUES(%s, %s, %s, %s)',\r\n         (id, select_pasajero, select_conductor, select_viaje))\r\n         conexion.commit()\r\n         conexion.close()\r\n+\r\n #?--------------- CONSULTAR PERSONA POR IDENTIFICACION\r\n-def consultarPersonaId(identificacion):\r\n+def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona WHERE identificacion = %s\"\r\n"
+                },
+                {
+                    "date": 1655124743052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM persona WHERE identificacion = %s\"\r\n+        sql = \"SELECT * FROM persona WHERE identificacion =\"\r\n         cursor.execute(sql, (identificacion))\r\n         persona = cursor.fetchone()\r\n         conexion.close()\r\n     return persona\r\n"
+                },
+                {
+                    "date": 1655124749712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona WHERE identificacion =\"\r\n-        cursor.execute(sql, (identificacion))\r\n+        cursor.execute(sql, ())\r\n         persona = cursor.fetchone()\r\n         conexion.close()\r\n     return persona\r\n \r\n"
+                },
+                {
+                    "date": 1655124756358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM persona WHERE identificacion =\"\r\n+        sql = \"SELECT * FROM persona WHERE identificacion\"\r\n         cursor.execute(sql, ())\r\n         persona = cursor.fetchone()\r\n         conexion.close()\r\n     return persona\r\n"
+                },
+                {
+                    "date": 1655124764789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,10 +24,10 @@\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM persona WHERE identificacion\"\r\n-        cursor.execute(sql, ())\r\n+        sql = \"SELECT * FROM persona\"\r\n+        cursor.execute(sql)\r\n         persona = cursor.fetchone()\r\n         conexion.close()\r\n     return persona\r\n \r\n"
+                },
+                {
+                    "date": 1655124853969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n-        persona = cursor.fetchone()\r\n+        persona = cursor.fetch()\r\n         conexion.close()\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655125343192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,10 +26,11 @@\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n-        persona = cursor.fetch()\r\n+        persona = cursor.fetchall()\r\n         conexion.close()\r\n+        print(persona)\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n"
+                },
+                {
+                    "date": 1655125435399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n         conexion.close()\r\n+        persona\r\n         print(persona)\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655125444056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n         conexion.close()\r\n-        persona\r\n+        var = \"\"\r\n         print(persona)\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655125450668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n         conexion.close()\r\n-        var = \"\"\r\n-        print(persona)\r\n+        var = \"hola \"\r\n+        print(var)\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n"
+                },
+                {
+                    "date": 1655125486910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,8 @@\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n         conexion.close()\r\n-        var = \"hola \"\r\n-        print(var)\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n def consultarBoletoId(id):\r\n"
+                },
+                {
+                    "date": 1655125933422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n+        prin\r\n         conexion.close()\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655125940251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona\"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n-        prin\r\n+        print(\"pruebade conexion\")\r\n         conexion.close()\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655126312747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,12 +24,12 @@\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM persona\"\r\n+        sql = \"SELECT * FROM persona WHERE \"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n-        print(\"pruebade conexion\")\r\n+        print(\"pruebade conexion....\")\r\n         conexion.close()\r\n     return persona\r\n \r\n #*--------------- CONSULTAR BOLETO POR ID\r\n"
+                },
+                {
+                    "date": 1655126346958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n     persona = None\r\n     with conexion.cursor() as cursor:\r\n-        sql = \"SELECT * FROM persona WHERE id_tipo_per\"\r\n+        sql = \"SELECT * FROM persona WHERE id_tipo_per \"\r\n         cursor.execute(sql)\r\n         persona = cursor.fetchall()\r\n         print(\"pruebade conexion....\")\r\n         conexion.close()\r\n"
+                },
+                {
+                    "date": 1655126435934,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,16 +22,16 @@\n \r\n #?--------------- CONSULTAR PASAJERO POR IDENTIFICACION\r\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n-     = None\r\n+    p = None\r\n     with conexion.cursor() as cursor:\r\n         sql = \"SELECT * FROM persona WHERE id_tipo_per = 1\"\r\n         cursor.execute(sql)\r\n-         = cursor.fetchall()\r\n+        p = cursor.fetchall()\r\n         print(\"pruebade conexion....\")\r\n         conexion.close()\r\n-    return \r\n+    return p\r\n \r\n #?--------------- CONSULTAR CONDUCTOR POR IDENTIFICACION\r\n def consultarPersonaId():\r\n     conexion = mysqlConnect()\r\n"
+                }
+            ],
+            "date": 1655123583154,
+            "name": "Commit-0",
+            "content": "from BaseDatos import mysqlConnect\r\n#*------------- LISTAR BOLETO\r\ndef consultarBoleto():\r\n    conexion = mysqlConnect()\r\n    boletos = []\r\n    with conexion.cursor() as cursor:\r\n        sql = \"SELECT a.id, a.pasajero, b.conductor, a.expedicion, b.viaje, a.silla, a.placa, a.tarifa, a.origen, b.destino FROM (SELECT b.id, e.fecha AS expedicion, v.silla, v.placa, v.tarifa, c.tipo AS origen, CONCAT(p.nombre, ' ', p.apellido) AS pasajero FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_pasajero INNER JOIN expedicion AS e ON b.id_expedicion = e.id INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_origen = c.id) a INNER JOIN (SELECT b.id, c.tipo AS destino, v.fecha AS viaje, CONCAT(p.nombre, ' ',p.apellido) AS conductor FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_conductor INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id ) b ON a.id = b.id\"\r\n        sql2 = \"SELECT b.id, p.nombre, e.fecha, v.fecha, v.silla, v.placa, v.tarifa, c.tipo FROM boleto AS b, persona AS p, expedicion AS e, viaje AS v, ciudad AS c WHERE p.identificacion = b.ident_pasajero AND e.id = b.id_expedicion AND v.numero = b.num_viaje AND c.id = v.id_ciudad_origen\"\r\n        cursor.execute(sql)\r\n        boletos = cursor.fetchall()\r\n        conexion.close()\r\n    return boletos\r\n\r\n#*-------------- AGREGAR BOLETO\r\ndef agregarBoleto(id, select_pasajero, select_conductor, select_viaje):\r\n    conexion = mysqlConnect()\r\n    with conexion.cursor() as cursor:\r\n        cursor.execute('INSERT INTO `boleto` (`id`, `ident_pasajero`, `ident_conductor`, `num_viaje`) VALUES(%s, %s, %s, %s)',\r\n        (id, select_pasajero, select_conductor, select_viaje))\r\n        conexion.commit()\r\n        conexion.close()\r\n#?--------------- CONSULTAR VIAJE POR NUMERO\r\ndef consultarViajeNum(numero):\r\n#*--------------- CONSULTAR BOLETO POR ID\r\ndef consultarBoletoId(id):\r\n    conexion = mysqlConnect()\r\n    boleto = None\r\n    with conexion.cursor() as cursor:\r\n        sql = \"SELECT * FROM boleto WHERE id = %s\"\r\n        cursor.execute(sql, (id))\r\n        boleto = cursor.fetchone()\r\n        conexion.close()\r\n    return boleto\r\n\r\n# #*---------------- ACTUALIZAR BOLETO\r\n# def actualizarPersona(identificacion,txtNombre, txtApellido, txtEmail, txtTelefono):\r\n#     conexion = mysqlConnect()\r\n#     with conexion.cursor() as cursor:\r\n#         cursor.execute('UPDATE persona SET identificacion = %s, nombre = %s, apellido = %s, email = %s, telefono = %s WHERE identificacion = %s',\r\n#             (identificacion, txtNombre, txtApellido, txtEmail, txtTelefono, identificacion))\r\n#         conexion.commit()\r\n#         conexion.close()\r\n\r\n#*---------------- ELIMINAR BOLETO\r\ndef eliminarBoleto(id):\r\n    conexion = mysqlConnect()\r\n    with conexion.cursor() as cursor:\r\n        cursor.execute('DELETE FROM boleto WHERE id = %s', (id))\r\n        conexion.commit()\r\n        conexion.close()"
+        }
+    ]
+}

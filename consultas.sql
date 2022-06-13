@@ -16,6 +16,7 @@ AND v.numero = b.num_viaje
 AND c.id = v.id_ciudad_origen
 AND c.id = v.id_ciudad_destino
 
+--! CONSULTA PARA LISTAR BOLETOS 
 SELECT 
        a.id, a.pasajero, b.conductor, a.expedicion, b.viaje, a.silla, a.placa, a.tarifa, a.origen, b.destino
 
@@ -35,6 +36,25 @@ INNER JOIN (
     INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id
 ) b ON a.id = b.id
 
+--* CONSULTA PARA LISTAR BOLETOS
+SELECT 
+    a.id, a.pasajero, b.conductor, b.viaje, a.silla, a.placa, a.tarifa, a.origen, b.destino 
+FROM (
+    SELECT b.id, v.silla, v.placa, v.tarifa, c.tipo AS origen, CONCAT(p.nombre, ' ', p.apellido) AS pasajero 
+    FROM persona AS p 
+    INNER JOIN boleto AS b ON p.identificacion = b.ident_pasajero 
+    INNER JOIN viaje AS v ON b.num_viaje = v.numero 
+    INNER JOIN ciudad AS c ON v.id_ciudad_origen = c.id
+) a 
+INNER JOIN (
+    SELECT b.id, c.tipo AS destino, v.fecha AS viaje, CONCAT(p.nombre, ' ',p.apellido) AS conductor 
+    FROM persona AS p 
+    INNER JOIN boleto AS b ON p.identificacion = b.ident_conductor 
+    INNER JOIN viaje AS v ON b.num_viaje = v.numero 
+    INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id 
+) b ON a.id = b.id
+
+--! CONSULTA PARA LISTAR VIAJE 
 SELECT b.id, p.nombre AS pasajero, p.nombre AS conductor, v.fecha, v.silla, v.placa, v.tarifa 
 FROM boleto AS b, persona AS p, viaje AS v
 WHERE b.ident_pasajero = p.identificacion
@@ -47,6 +67,7 @@ UPDATE persona SET nombre = 'Diego', apellido = 'Torres', email = 'diego@gmail.c
 
 UPDATE persona SET nombre = 'Diego', apellido = 'Torres', email = 'diego@gmail.com', telefono = 321145525, id_tipo_per = 2, id_tipo_doc = 2 WHERE identificacion = 9
 
+--* CONSULTA PARA LISTAR VIAJE
 SELECT o.numero, o.fecha, o.silla, o.placa, o.tarifa, o.ciudad AS origen, d.ciudad AS destino
 FROM (
     SELECT v.numero, c.tipo AS ciudad, v.fecha, v.silla, v.placa, v.tarifa 
@@ -59,6 +80,7 @@ INNER JOIN (
     INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id
 ) d ON o.numero = d.numero 
 AND o.numero = 1
+
 
 SELECT * FROM viaje WHERE numero = 1;
 

@@ -13,25 +13,25 @@
                 <div class="form-group mb-3">
                     <label id="select_pasajero">Pasajero: </label>
                     <select class="form-select"  name="select_pasajero" aria-label="Default select example">
-                        <option selected></option>
-                        <option value="1">Bogota</option>
-                        <option value="4">Medellin</option>
+                        {% for pasajero in pasajero %}
+                        <option value="{{pasajero[0]}}">{{pasajero[1]}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label id="select_conductor">Conductor: </label>
                     <select class="form-select" name="select_conductor" aria-label="Default select example">
-                        <option selected>Selecciona la ciudad</option>
-                        <option value="1">Bogota</option>
-                        <option value="4">Medellin</option>
+                        {% for conductor in conductor %}
+                        <option value="{{conductor[0]}}">{{conductor[1]}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label id="select_viaje">Viaje: </label>
                     <select class="form-select" name="select_viaje" aria-label="Default select example">
-                        <option selected>Selecciona la ciudad</option>
-                        <option value="1">Bogota</option>
-                        <option value="4">Medellin</option>
+                        {% for viaje in viaje %}
+                        <option value="{{viaje[0]}}">{{viaje[1]}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <a class="btn btn-secondary" href="/listaBoleto" role="button">Regresar</a>

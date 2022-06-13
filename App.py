@@ -63,19 +63,22 @@ def eliminarPersona(identificacion):
 def listaBoletos():
     boleto = controladorBoleto.consultarBoleto()
     return render_template("boleto.html", boletos = boleto)
-
 @app.route('/agregarBoleto')
-def agregaBoleto():
-    return render_template("crudBoleto/agregar.html")
 
-@app.route('/frmAgregarBoleto', methods=['POST'])
+def agregaBoleto():
+    pasajero = controladorBoleto.consultarPasajeroId()
+    conductor = controladorBoleto.consultarConductorId()
+    viaje = controladorBoleto.consultarViajeId()
+    print(pasajero)
+    return render_template("crudBoleto/agregar.html", pasajero = pasajero, conductor = conductor, viaje = viaje)
+
+@app.route('/frmAgregarBoleto',  methods=['POST'])
 def agregarBoleto():
     if request.method == 'POST':
         id = request.form['id']
         select_pasajero = request.form['select_pasajero']
         select_conductor = request.form['select_conductor']
         select_viaje = request.form['select_viaje']
-        
         controladorBoleto.agregarBoleto(id, select_pasajero, select_conductor, select_viaje)
     return redirect("/listaBoleto")
 
@@ -104,7 +107,6 @@ def agregarViaje():
         tarifa = request.form['tarifa']
         select_ciudad_origen = request.form['select_ciudad_origen']
         select_ciudad_destino = request.form['select_ciudad_destino']
-        
         controladorViaje.agregarViaje(numero, fecha, silla, placa, tarifa, select_ciudad_origen, select_ciudad_destino)
     return redirect("/listaViaje")
 

@@ -4,8 +4,9 @@ def consultarBoleto():
     conexion = mysqlConnect()
     boletos = []
     with conexion.cursor() as cursor:
-        sql = "SELECT a.id, a.pasajero, b.conductor, a.expedicion, b.viaje, a.silla, a.placa, a.tarifa, a.origen, b.destino FROM (SELECT b.id, e.fecha AS expedicion, v.silla, v.placa, v.tarifa, c.tipo AS origen, CONCAT(p.nombre, ' ', p.apellido) AS pasajero FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_pasajero INNER JOIN expedicion AS e ON b.id_expedicion = e.id INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_origen = c.id) a INNER JOIN (SELECT b.id, c.tipo AS destino, v.fecha AS viaje, CONCAT(p.nombre, ' ',p.apellido) AS conductor FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_conductor INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id ) b ON a.id = b.id"
-        sql2 = "SELECT b.id, p.nombre, e.fecha, v.fecha, v.silla, v.placa, v.tarifa, c.tipo FROM boleto AS b, persona AS p, expedicion AS e, viaje AS v, ciudad AS c WHERE p.identificacion = b.ident_pasajero AND e.id = b.id_expedicion AND v.numero = b.num_viaje AND c.id = v.id_ciudad_origen"
+        #TODO Consulta BD Expresobus
+        sql = "SELECT a.id, a.pasajero, b.conductor, b.viaje, a.silla, a.placa, a.tarifa, a.origen, b.destino FROM (SELECT b.id, v.silla, v.placa, v.tarifa, c.tipo AS origen, CONCAT(p.nombre, ' ', p.apellido) AS pasajero FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_pasajero INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_origen = c.id) a INNER JOIN (SELECT b.id, c.tipo AS destino, v.fecha AS viaje, CONCAT(p.nombre, ' ',p.apellido) AS conductor FROM persona AS p INNER JOIN boleto AS b ON p.identificacion = b.ident_conductor INNER JOIN viaje AS v ON b.num_viaje = v.numero INNER JOIN ciudad AS c ON v.id_ciudad_destino = c.id ) b ON a.id = b.id"
+        sql2 = ""
         cursor.execute(sql)
         boletos = cursor.fetchall()
         conexion.close()
@@ -19,6 +20,42 @@ def agregarBoleto(id, select_pasajero, select_conductor, select_viaje):
         (id, select_pasajero, select_conductor, select_viaje))
         conexion.commit()
         conexion.close()
+
+#?--------------- CONSULTAR PASAJERO POR IDENTIFICACION
+def consultarPasajeroId():
+    conexion = mysqlConnect()
+    pasajaro = None
+    with conexion.cursor() as cursor:
+        sql = "SELECT * FROM persona WHERE id_tipo_per = 1"
+        cursor.execute(sql)
+        pasajaro = cursor.fetchall()
+        print("prueba de conexion pasajero")
+        conexion.close()
+    return pasajaro
+
+#?--------------- CONSULTAR CONDUCTOR POR IDENTIFICACION
+def consultarConductorId():
+    conexion = mysqlConnect()
+    conductor = None
+    with conexion.cursor() as cursor:
+        sql = "SELECT * FROM persona WHERE id_tipo_per = 2"
+        cursor.execute(sql)
+        conductor = cursor.fetchall()
+        print("prueba de conexion conductor")
+        conexion.close()
+    return conductor
+
+#?--------------- CONSULTAR VIAJE POR ID
+def consultarViajeId():
+    conexion = mysqlConnect()
+    viaje = None
+    with conexion.cursor() as cursor:
+        sql = "SELECT * FROM viaje"
+        cursor.execute(sql)
+        viaje = cursor.fetchall()
+        print("prueba de conexion viaje")
+        conexion.close()
+    return viaje
 
 #*--------------- CONSULTAR BOLETO POR ID
 def consultarBoletoId(id):
